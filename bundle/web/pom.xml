@@ -26,10 +26,6 @@
             <groupId>hu.uni.miskolc.iit.swtest.team3</groupId>
             <artifactId>dao</artifactId>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
