@@ -1,0 +1,5 @@
+language: java
+sudo: false # faster builds
+
+before_install: cd bundle
+script: mvn clean verify
