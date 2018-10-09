@@ -1,14 +1,16 @@
 package hu.uni.miskolc.iit.swtest.team3.model;
 
+import java.util.Date;
+
 public class Borrowing {
 
     private int borrowId;
     private BorrowStatus status;
     private Reader creator;
     private BookInstance book;
-    private date creationDate;
+    private Date creationDate;
 
-    public Borrowing(int borrowId, BorrowStatus status, Reader creator, BookInstance book, date creationDate) {
+    public Borrowing(int borrowId, BorrowStatus status, Reader creator, BookInstance book, Date creationDate) {
         this.borrowId = borrowId;
         this.status = status;
         this.creator = creator;
@@ -48,11 +50,11 @@ public class Borrowing {
         this.book = book;
     }
 
-    public date getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(date creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 }

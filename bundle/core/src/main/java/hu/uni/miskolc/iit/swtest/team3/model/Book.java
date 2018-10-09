@@ -1,5 +1,7 @@
 package hu.uni.miskolc.iit.swtest.team3.model;
 
+import java.util.Collection;
+
 public class Book {
 
     private String isbn;

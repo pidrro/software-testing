@@ -4,10 +4,12 @@ public class BookInstance {
 
     private int instanceId;
     private boolean avaliable;
+    private Book parent;
 
-    public BookInstance(int instanceId, boolean avaliable) {
+    public BookInstance(int instanceId, boolean avaliable, Book parent) {
         this.instanceId = instanceId;
         this.avaliable = avaliable;
+        this.parent = parent;
     }
 
     public int getInstanceId() {
@@ -24,5 +26,13 @@ public class BookInstance {
 
     public void setAvaliable(boolean avaliable) {
         this.avaliable = avaliable;
+    }
+
+    public Book getParent() {
+        return parent;
+    }
+
+    public void setParent(Book parent) {
+        this.parent = parent;
     }
 }
