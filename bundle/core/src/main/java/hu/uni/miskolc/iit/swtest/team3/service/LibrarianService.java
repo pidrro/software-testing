@@ -16,11 +16,11 @@ import java.util.List;
  */
 public interface LibrarianService {
     
-    public List<Book> listBooks();
-    public List<Borrowing> listBorrowings();
-    public void addBook(Book book);
-    public void addBookInstance(BookInstance bookInstance);
-    public List<Borrowing> listRequests();
-    public void manageRequest(Borrowing borrowing);
+    List<Book> listBooks();
+    List<Borrowing> listBorrowings();
+    void addBook(Book book);
+    void addBookInstance(BookInstance bookInstance);
+    List<Borrowing> listRequests();
+    void manageRequest(Borrowing borrowing);
     
 }

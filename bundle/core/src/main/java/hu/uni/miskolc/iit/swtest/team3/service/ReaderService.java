@@ -7,9 +7,9 @@ import hu.uni.miskolc.iit.swtest.team3.model.Borrowing;
 
 public interface ReaderService{
 
-    public List<Book> listBooks();
-    public List<Borrowing> listBorrowings();
-    public void requestBook(Book book);
-    public void checkAvailability();
+    List<Book> listBooks();
+    List<Borrowing> listBorrowings();
+    void requestBook(Book book);
+    Boolean checkAvailability(Book book);
 
 }

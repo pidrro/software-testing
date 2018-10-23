@@ -1,6 +1,6 @@
 package hu.uni.miskolc.iit.swtest.team3.model;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Borrowing {
 
@@ -8,9 +8,9 @@ public class Borrowing {
     private BorrowStatus status;
     private Reader creator;
     private BookInstance book;
-    private Date creationDate;
+    private GregorianCalendar creationDate;
 
-    public Borrowing(int borrowId, BorrowStatus status, Reader creator, BookInstance book, Date creationDate) {
+    public Borrowing(int borrowId, BorrowStatus status, Reader creator, BookInstance book, GregorianCalendar creationDate) {
         this.borrowId = borrowId;
         this.status = status;
         this.creator = creator;
@@ -50,11 +50,11 @@ public class Borrowing {
         this.book = book;
     }
 
-    public Date getCreationDate() {
+    public GregorianCalendar getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(GregorianCalendar creationDate) {
         this.creationDate = creationDate;
     }
 }
