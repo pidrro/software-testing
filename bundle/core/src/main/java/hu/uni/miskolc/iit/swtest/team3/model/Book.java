@@ -11,6 +11,9 @@ public class Book {
     private String language;
     private Collection<BookInstance> instances;
 
+    public Book() {
+    }
+
     public Book(String isbn, String author, String title, String description, String language, Collection<BookInstance> instances) {
         this.isbn = isbn;
         this.author = author;
