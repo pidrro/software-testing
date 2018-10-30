@@ -6,11 +6,11 @@ public class Borrowing {
 
     private int borrowId;
     private BorrowStatus status;
-    private Reader creator;
+    private User creator;
     private BookInstance book;
     private GregorianCalendar creationDate;
 
-    public Borrowing(int borrowId, BorrowStatus status, Reader creator, BookInstance book, GregorianCalendar creationDate) {
+    public Borrowing(int borrowId, BorrowStatus status, User creator, BookInstance book, GregorianCalendar creationDate) {
         this.borrowId = borrowId;
         this.status = status;
         this.creator = creator;
@@ -34,11 +34,11 @@ public class Borrowing {
         this.status = status;
     }
 
-    public Reader getCreator() {
+    public User getCreator() {
         return creator;
     }
 
-    public void setCreator(Reader creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 

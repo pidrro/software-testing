@@ -1,17 +1,19 @@
 package hu.uni.miskolc.iit.swtest.team3.model;
 
-public abstract class User {
+public class User {
 
     private int userId;
     private String passwordHash;
     private String name;
     private String email;
+    private Boolean librarian;
 
-    public User(int userId, String passwordHash, String name, String email) {
+    public User(int userId, String passwordHash, String name, String email, Boolean librarian) {
         this.userId = userId;
         this.passwordHash = passwordHash;
         this.name = name;
         this.email = email;
+        this.librarian = librarian;
     }
 
     public int getUserId() {
@@ -44,5 +46,13 @@ public abstract class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean isLibrarian() {
+        return librarian;
+    }
+
+    public void setLibrarian(Boolean librarian) {
+        this.librarian = librarian;
     }
 }
