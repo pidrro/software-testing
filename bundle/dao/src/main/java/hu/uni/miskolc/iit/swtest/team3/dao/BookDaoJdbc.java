@@ -28,8 +28,13 @@ public class BookDaoJdbc implements BookDao {
     @Autowired
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @Autowired
+    final
     RowMapper<Book> rowMapper;
+
+    @Autowired
+    public BookDaoJdbc(RowMapper<Book> rowMapper) {
+        this.rowMapper = rowMapper;
+    }
 
     @Override
     public int create(Book book) {
@@ -38,7 +43,7 @@ public class BookDaoJdbc implements BookDao {
 
     @Override
     public int[] create(List<Book> books) {
-        SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(books.toArray(new Book[books.size()]));
+        SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(books.toArray());
         return namedParameterJdbcTemplate.batchUpdate(INSERT, params);
     }
 
@@ -60,7 +65,7 @@ public class BookDaoJdbc implements BookDao {
 
     @Override
     public int[] update(List<Book> books) {
-        SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(books.toArray(new Book[books.size()]));
+        SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(books.toArray());
         return namedParameterJdbcTemplate.batchUpdate(UPDATE_BY_ID, params);
     }
 
@@ -76,7 +81,7 @@ public class BookDaoJdbc implements BookDao {
 
     @Override
     public int[] delete(List<Book> books) {
-        SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(books.toArray(new Book[books.size()]));
+        SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(books.toArray());
         return namedParameterJdbcTemplate.batchUpdate(DELETE_BY_ID, params);
     }
 

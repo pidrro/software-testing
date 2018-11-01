@@ -3,12 +3,12 @@ package hu.uni.miskolc.iit.swtest.team3.model;
 public class BookInstance {
 
     private int instanceId;
-    private boolean avaliable;
+    private boolean available;
     private Book parent;
 
-    public BookInstance(int instanceId, boolean avaliable, Book parent) {
+    public BookInstance(int instanceId, boolean available, Book parent) {
         this.instanceId = instanceId;
-        this.avaliable = avaliable;
+        this.available = available;
         this.parent = parent;
     }
 
@@ -20,12 +20,12 @@ public class BookInstance {
         this.instanceId = instanceId;
     }
 
-    public boolean isAvaliable() {
-        return avaliable;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setAvaliable(boolean avaliable) {
-        this.avaliable = avaliable;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public Book getParent() {

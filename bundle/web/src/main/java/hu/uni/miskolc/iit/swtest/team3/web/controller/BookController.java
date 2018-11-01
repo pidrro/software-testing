@@ -11,8 +11,13 @@ import java.util.List;
 @Controller
 public class BookController {
 
-    @Autowired
+    final
     BookDao bookDao;
+
+    @Autowired
+    public BookController(BookDao bookDao) {
+        this.bookDao = bookDao;
+    }
 
     @RequestMapping("/book/create")
     @ResponseBody

@@ -1,11 +1,13 @@
 package hu.uni.miskolc.iit.swtest.team3.service;
 
 import hu.uni.miskolc.iit.swtest.team3.model.*;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+@Component
 public class DummyReaderServiceImpl implements ReaderService {
 
     private static List<Book> books = new ArrayList<>();
@@ -28,7 +30,7 @@ public class DummyReaderServiceImpl implements ReaderService {
     public List<Borrowing> listBorrowings() {
         List<Borrowing> dummyBorrowings = new ArrayList<>();
         dummyBorrowings.add(new Borrowing(88, BorrowStatus.BORROWED, (Reader)users.get(0),
-                new BookInstance(00, true, books.get(0)),
+                new BookInstance(0, true, books.get(0)),
                 new GregorianCalendar(2017,9,1)));
         return dummyBorrowings;
     }
