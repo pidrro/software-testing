@@ -18,6 +18,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <dependency.org.springframework.version>5.1.1.RELEASE</dependency.org.springframework.version>
+        <dependency.com.fasterxml.jackson.core.version>2.9.7</dependency.com.fasterxml.jackson.core.version>
     </properties>
 
     <dependencyManagement><!-- lock down dependency versions to keep it the same throughout the project -->
