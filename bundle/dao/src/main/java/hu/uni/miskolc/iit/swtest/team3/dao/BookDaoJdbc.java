@@ -1,7 +1,6 @@
 package hu.uni.miskolc.iit.swtest.team3.dao;
 
 import hu.uni.miskolc.iit.swtest.team3.model.Book;
-import hu.uni.miskolc.iit.swtest.team3.service.dao.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,11 +8,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class BookDaoJdbc implements BookDao {
 
     private static final String SELECT = "SELECT * FROM books";
