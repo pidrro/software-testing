@@ -9,18 +9,18 @@ public class Book {
     private String title;
     private String description;
     private String language;
-    private Collection<BookInstance> instances;
+    private Integer availableCopies;
 
     public Book() {
     }
 
-    public Book(String isbn, String author, String title, String description, String language, Collection<BookInstance> instances) {
+    public Book(String isbn, String author, String title, String description, String language, Integer availableCopies) {
         this.isbn = isbn;
         this.author = author;
         this.title = title;
         this.description = description;
         this.language = language;
-        this.instances = instances;
+        this.availableCopies = availableCopies;
     }
 
     public String getIsbn() {
@@ -63,11 +63,11 @@ public class Book {
         this.language = language;
     }
 
-    public Collection<BookInstance> getInstances() {
-        return instances;
+    public Integer getAvailableCopies() {
+        return availableCopies;
     }
 
-    public void setInstances(Collection<BookInstance> instances) {
-        this.instances = instances;
+    public void setAvailableCopies(Integer availableCopies) {
+        this.availableCopies = availableCopies;
     }
 }
