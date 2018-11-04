@@ -1,4 +1,4 @@
-package hu.uni.miskolc.iit.swtest.team3.service.dao;
+package hu.uni.miskolc.iit.swtest.team3.dao;
 
 import hu.uni.miskolc.iit.swtest.team3.model.Book;
 

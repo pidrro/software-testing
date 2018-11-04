@@ -7,10 +7,10 @@ public class Borrowing {
     private int borrowId;
     private BorrowStatus status;
     private User creator;
-    private BookInstance book;
+    private Book book;
     private GregorianCalendar creationDate;
 
-    public Borrowing(int borrowId, BorrowStatus status, User creator, BookInstance book, GregorianCalendar creationDate) {
+    public Borrowing(int borrowId, BorrowStatus status, User creator, Book book, GregorianCalendar creationDate) {
         this.borrowId = borrowId;
         this.status = status;
         this.creator = creator;
@@ -42,11 +42,11 @@ public class Borrowing {
         this.creator = creator;
     }
 
-    public BookInstance getBook() {
+    public Book getBook() {
         return book;
     }
 
-    public void setBook(BookInstance book) {
+    public void setBook(Book book) {
         this.book = book;
     }
 

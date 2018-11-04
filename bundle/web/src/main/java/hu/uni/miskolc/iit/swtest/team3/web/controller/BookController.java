@@ -1,6 +1,6 @@
 package hu.uni.miskolc.iit.swtest.team3.web.controller;
 
-import hu.uni.miskolc.iit.swtest.team3.service.dao.BookDao;
+import hu.uni.miskolc.iit.swtest.team3.dao.BookDao;
 import hu.uni.miskolc.iit.swtest.team3.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

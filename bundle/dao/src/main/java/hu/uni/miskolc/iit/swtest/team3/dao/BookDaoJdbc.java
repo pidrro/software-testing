@@ -1,7 +1,6 @@
 package hu.uni.miskolc.iit.swtest.team3.dao;
 
 import hu.uni.miskolc.iit.swtest.team3.model.Book;
-import hu.uni.miskolc.iit.swtest.team3.service.dao.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,17 +8,17 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class BookDaoJdbc implements BookDao {
 
     private static final String SELECT = "SELECT * FROM books";
     private static final String SELECT_BY_ID = "SELECT * FROM books WHERE isbn = :isbn";
-    private static final String INSERT = "INSERT INTO books (isbn, author, title, description, language) values (:isbn, :author, :title, :description, :language)";
-    private static final String UPDATE_BY_ID = "UPDATE books SET isbn=:isbn, author=:author, title=:title, description=:description, language=:language WHERE isbn=:isbn";
+    private static final String INSERT = "INSERT INTO books (isbn, author, title, description, language, availableCopies) values (:isbn, :author, :title, :description, :language, :availableCopies)";
+    private static final String UPDATE_BY_ID = "UPDATE books SET isbn=:isbn, author=:author, title=:title, description=:description, language=:language, availableCopies=:availableCopies WHERE isbn=:isbn";
     private static final String DELETE_BY_ID = "DELETE FROM books WHERE isbn=:isbn";
 
     @Autowired
@@ -94,6 +93,7 @@ public class BookDaoJdbc implements BookDao {
         namedParameters.addValue("title", book.getTitle());
         namedParameters.addValue("description", book.getDescription());
         namedParameters.addValue("language", book.getLanguage());
+        namedParameters.addValue("availableCopies", book.getAvailableCopies());
 
         return namedParameters;
     }
