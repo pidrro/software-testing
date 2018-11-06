@@ -18,7 +18,7 @@ public interface BorrowingDao {
     
     int[] create(List<Borrowing> books);
 
-    Borrowing read(String borrowId);
+    Borrowing read(int borrowId);
 
     List<Borrowing> read();
 
@@ -28,7 +28,7 @@ public interface BorrowingDao {
 
     int delete(Borrowing borrowing);
 
-    int delete(String borrowId);
+    int delete(int borrowId);
 
     int[] delete(List<Borrowing> borrowings);
     
