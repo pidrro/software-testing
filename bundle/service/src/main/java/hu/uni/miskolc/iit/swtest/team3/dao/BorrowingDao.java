@@ -22,6 +22,8 @@ public interface BorrowingDao {
 
     List<Borrowing> read();
 
+    Borrowing read(Book book);
+
     int update(Borrowing borrowing);
 
     int[] update(List<Borrowing> borrowings);
