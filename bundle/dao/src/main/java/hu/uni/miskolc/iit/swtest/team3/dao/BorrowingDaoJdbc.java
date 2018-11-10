@@ -18,6 +18,7 @@ public class BorrowingDaoJdbc implements BorrowingDao {
 
     private static final String SELECT = "SELECT * FROM borrowings";
     private static final String SELECT_BY_ID = "SELECT * FROM borrowings WHERE borrowId = :borrowId";
+    private static final String SELECT_BY_BOOK ="SELECT * FROM borrowings WHERE book = :book";
     private static final String INSERT = "INSERT INTO borrowings(borrowId, status, creator, book, creationDate) values (:borrowId, :status, :creator, :book, :creationDate)";
     private static final String UPDATE_BY_ID = "UPDATE borrowings SET borrowId=:borrowId, status=:status, creator=:creator, book=:book, creationDate=:creationDate WHERE borrowId=:borrowId";
     private static final String DELETE_BY_ID = "DELETE FROM borrowings WHERE borrowId=:borrowId";
@@ -42,12 +43,18 @@ public class BorrowingDaoJdbc implements BorrowingDao {
         return namedParameterJdbcTemplate.batchUpdate(INSERT, params);}
 
     @Override
-    public Borrowing read(String borrowId) {
+    public Borrowing read(int borrowId) {
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("borrowId", borrowId);
         return namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, namedParameters, rowMapper);}
 
     @Override
     public List<Borrowing> read() {return jdbcTemplate.query(SELECT, rowMapper);}
+
+    @Override
+    public Borrowing read(Book book){
+        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("book", book);
+        return namedParameterJdbcTemplate.queryForObject(SELECT_BY_BOOK,namedParameters,rowMapper);
+    }
 
     @Override
     public int update(Borrowing borrowing) {return namedParameterJdbcTemplate.update(UPDATE_BY_ID, getSqlParameterSource(borrowing));}
