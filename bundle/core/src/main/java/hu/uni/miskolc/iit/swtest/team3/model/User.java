@@ -8,6 +8,8 @@ public class User {
     private String email;
     private Boolean librarian;
 
+    public User(){}
+
     public User(int userId, String passwordHash, String name, String email, Boolean librarian) {
         this.userId = userId;
         this.passwordHash = passwordHash;

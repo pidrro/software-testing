@@ -10,6 +10,8 @@ public class Borrowing {
     private Book book;
     private GregorianCalendar creationDate;
 
+    public Borrowing(){}
+
     public Borrowing(int borrowId, BorrowStatus status, User creator, Book book, GregorianCalendar creationDate) {
         this.borrowId = borrowId;
         this.status = status;
