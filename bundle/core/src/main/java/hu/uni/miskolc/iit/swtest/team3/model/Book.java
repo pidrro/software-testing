@@ -1,7 +1,5 @@
 package hu.uni.miskolc.iit.swtest.team3.model;
 
-import java.util.Collection;
-
 public class Book {
 
     private String isbn;
@@ -11,8 +9,7 @@ public class Book {
     private String language;
     private Integer availableCopies;
 
-    public Book() {
-    }
+    public Book(){}
 
     public Book(String isbn, String author, String title, String description, String language, Integer availableCopies) {
         this.isbn = isbn;
