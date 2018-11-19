@@ -32,7 +32,7 @@ public class UserDaoJdbc implements UserDao {
     RowMapper<User> rowMapper;
 
     @Autowired
-    public BookDaoJdbc(RowMapper<Book> rowMapper) {
+    public UserDaoJdbc(RowMapper<User> rowMapper) {
         this.rowMapper = rowMapper;
     }
 
