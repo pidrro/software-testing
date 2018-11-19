@@ -6,6 +6,7 @@
 package hu.uni.miskolc.iit.swtest.team3.dao;
 
 import hu.uni.miskolc.iit.swtest.team3.model.Borrowing;
+import hu.uni.miskolc.iit.swtest.team3.model.Book;
 import java.util.List;
 
 /**
@@ -21,6 +22,8 @@ public interface BorrowingDao {
     Borrowing read(int borrowId);
 
     List<Borrowing> read();
+
+    Borrowing read(Book book);
 
     int update(Borrowing borrowing);
 
