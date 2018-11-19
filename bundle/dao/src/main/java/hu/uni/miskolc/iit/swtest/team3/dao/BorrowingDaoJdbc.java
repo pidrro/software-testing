@@ -1,5 +1,6 @@
 package hu.uni.miskolc.iit.swtest.team3.dao;
 
+import hu.uni.miskolc.iit.swtest.team3.model.Book;
 import hu.uni.miskolc.iit.swtest.team3.model.Borrowing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,7 +11,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.tree.RowMapper;
 import java.util.List;
 
 @Repository
@@ -68,7 +68,7 @@ public class BorrowingDaoJdbc implements BorrowingDao {
     public int delete(Borrowing borrowing) {return namedParameterJdbcTemplate.update(DELETE_BY_ID, getSqlParameterSource(borrowing));}
 
     @Override
-    public int delete(String borrowId) {return namedParameterJdbcTemplate.update(DELETE_BY_ID, new MapSqlParameterSource().addValue("borrowId", borrowId));}
+    public int delete(int borrowId) {return namedParameterJdbcTemplate.update(DELETE_BY_ID, new MapSqlParameterSource().addValue("borrowId", borrowId));}
 
     @Override
     public int[] delete(List<Borrowing> borrowings) {

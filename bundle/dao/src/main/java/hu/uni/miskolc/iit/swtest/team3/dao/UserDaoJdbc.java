@@ -1,14 +1,12 @@
 package hu.uni.miskolc.iit.swtest.team3.dao;
 
-import hu.uni.miskolc.iit.swtest.team3.model.Book;
-import hu.uni.miskolc.iit.swtest.team3.service.dao.BookDao;
+import hu.uni.miskolc.iit.swtest.team3.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,10 +15,10 @@ import java.util.List;
 public class UserDaoJdbc implements UserDao {
 
     private static final String SELECT = "SELECT * FROM user";
-    private static final String SELECT_BY_ID = "SELECT * FROM user WHERE userid = :userid";
-    private static final String INSERT = "INSERT INTO user (userid, fname, lname, bdate, town, street, hnumber) values (:userid, :fname, :lname, :bdate, :town, :street, :hnumber)";
-    private static final String UPDATE_BY_ID = "UPDATE user SET userid=:userid, fname=:fname, lname=:lname, bdate=:bdate, town=:town street=:street, hnumber=:hnumber WHERE userid=:userid";
-    private static final String DELETE_BY_ID = "DELETE FROM user WHERE userid=:userid";
+    private static final String SELECT_BY_ID = "SELECT * FROM user WHERE userId = :userId";
+    private static final String INSERT = "INSERT INTO user (userId, name, email, passwordHash) values (:userId, :name, :email, :passwordHash)";
+    private static final String UPDATE_BY_ID = "UPDATE user SET userId=:userId, name=:name, email=:email, passwordHash=:passwordHash WHERE userId=:userId";
+    private static final String DELETE_BY_ID = "DELETE FROM user WHERE userId=:userId";
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -42,14 +40,8 @@ public class UserDaoJdbc implements UserDao {
     }
 
     @Override
-    public int[] create(List<User> user) {
-        SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(books.toArray());
-        return namedParameterJdbcTemplate.batchUpdate(INSERT, params);
-    }
-
-    @Override
-    public User read(String userid) {
-        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("userid", userid);
+    public User read(String userId) {
+        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("userId", userId);
         return namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, namedParameters, rowMapper);
     }
 
@@ -60,13 +52,7 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public int update(User user) {
-        return namedParameterJdbcTemplate.update(UPDATE_BY_ID, getSqlParameterSource(book));
-    }
-
-    @Override
-    public int[] update(List<User> user) {
-        SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(user.toArray());
-        return namedParameterJdbcTemplate.batchUpdate(UPDATE_BY_ID, params);
+        return namedParameterJdbcTemplate.update(UPDATE_BY_ID, getSqlParameterSource(user));
     }
 
     @Override
@@ -75,27 +61,18 @@ public class UserDaoJdbc implements UserDao {
     }
 
     @Override
-    public int delete(String userid) {
-        return namedParameterJdbcTemplate.update(DELETE_BY_ID, new MapSqlParameterSource().addValue("userid", userid));
-    }
-
-    @Override
-    public int[] delete(List<User> user) {
-        SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(user.toArray());
-        return namedParameterJdbcTemplate.batchUpdate(DELETE_BY_ID, params);
+    public int delete(String userId) {
+        return namedParameterJdbcTemplate.update(DELETE_BY_ID, new MapSqlParameterSource().addValue("userId", userId));
     }
 
     private SqlParameterSource getSqlParameterSource(User user) {
 
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 
-        namedParameters.addValue("userid", user.getUserID());
-        namedParameters.addValue("fname", user.getFName());
-        namedParameters.addValue("lname", user.getLName());
-        namedParameters.addValue("bdate", user.getBDate());
-        namedParameters.addValue("town", user.getTown());
-        namedParameters.addValue("street", user.getStreet());
-        namedParameters.addValue("hnumber", user.getHNumber());
+        namedParameters.addValue("userId", user.getUserId());
+        namedParameters.addValue("name", user.getName());
+        namedParameters.addValue("email", user.getEmail());
+        namedParameters.addValue("passwordHash", user.getPasswordHash());
 
         return namedParameters;
     }
