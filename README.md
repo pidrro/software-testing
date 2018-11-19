@@ -4,7 +4,7 @@
 >The goal of this project is to help us practice software testing and software development in general, as a member of a team.
 
 [![Build Status](https://travis-ci.org/djavorek/software-testing.svg?branch=master)](https://travis-ci.org/djavorek/software-testing)
-[![Coverage Status](https://coveralls.io/repos/github/djavorek/software-testing/badge.svg?branch=master)](https://coveralls.io/github/djavorek/software-testing?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/djavorek/software-testing/badge.svg?branch=master&kill_cache=1)](https://coveralls.io/github/djavorek/software-testing?branch=master&kill_cache=1)
 
 ### Documentation
 
