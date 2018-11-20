@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.uni.miskolc.iit.swtest.team3.service;
 
 import hu.uni.miskolc.iit.swtest.team3.dao.BookDao;
@@ -12,6 +7,8 @@ import static hu.uni.miskolc.iit.swtest.team3.model.BorrowStatus.REQUESTED;
 import hu.uni.miskolc.iit.swtest.team3.model.Borrowing;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,9 +20,9 @@ import org.springframework.stereotype.Service;
 public class LibrarianServiceImpl implements LibrarianService {
 
     private BookDao bookDao;
-    
     private BorrowingDao borrowingDao;
 
+    @Autowired
     public LibrarianServiceImpl(BookDao bookDao, BorrowingDao borrowingDao) {
         this.bookDao = bookDao;
         this.borrowingDao = borrowingDao;

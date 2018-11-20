@@ -7,17 +7,17 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class UserDaoJdbc implements UserDao {
 
     private static final String SELECT = "SELECT * FROM user";
     private static final String SELECT_BY_ID = "SELECT * FROM user WHERE userId = :userId";
-    private static final String INSERT = "INSERT INTO user (userId, name, email, passwordHash) values (:userId, :name, :email, :passwordHash)";
-    private static final String UPDATE_BY_ID = "UPDATE user SET userId=:userId, name=:name, email=:email, passwordHash=:passwordHash WHERE userId=:userId";
+    private static final String INSERT = "INSERT INTO user (userId, name, email, passwordHash, librarian) values (:userId, :name, :email, :passwordHash, :librarian)";
+    private static final String UPDATE_BY_ID = "UPDATE user SET userId=:userId, name=:name, email=:email, passwordHash=:passwordHash, librarian=:librarian WHERE userId=:userId";
     private static final String DELETE_BY_ID = "DELETE FROM user WHERE userId=:userId";
 
     @Autowired
@@ -73,6 +73,7 @@ public class UserDaoJdbc implements UserDao {
         namedParameters.addValue("name", user.getName());
         namedParameters.addValue("email", user.getEmail());
         namedParameters.addValue("passwordHash", user.getPasswordHash());
+        namedParameters.addValue("librarian", user.isLibrarian());
 
         return namedParameters;
     }

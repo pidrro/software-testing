@@ -18,9 +18,9 @@ public class BorrowingDaoJdbc implements BorrowingDao {
 
     private static final String SELECT = "SELECT * FROM borrowings";
     private static final String SELECT_BY_ID = "SELECT * FROM borrowings WHERE borrowId = :borrowId";
-    private static final String SELECT_BY_BOOK ="SELECT * FROM borrowings WHERE book = :book";
-    private static final String INSERT = "INSERT INTO borrowings(borrowId, status, creator, book, creationDate) values (:borrowId, :status, :creator, :book, :creationDate)";
-    private static final String UPDATE_BY_ID = "UPDATE borrowings SET borrowId=:borrowId, status=:status, creator=:creator, book=:book, creationDate=:creationDate WHERE borrowId=:borrowId";
+    private static final String SELECT_BY_BOOK ="SELECT * FROM borrowings WHERE bookIsbn = :bookIsbn";
+    private static final String INSERT = "INSERT INTO borrowings(borrowId, status, creatorId, bookIsbn, creationDate) values (:borrowId, :status, :creatorId, :bookIsbn, :creationDate)";
+    private static final String UPDATE_BY_ID = "UPDATE borrowings SET borrowId=:borrowId, status=:status, creatorId=:creatorId, bookIsbn=:bookIsbn, creationDate=:creationDate WHERE borrowId=:borrowId";
     private static final String DELETE_BY_ID = "DELETE FROM borrowings WHERE borrowId=:borrowId";
 
     @Autowired
@@ -52,7 +52,7 @@ public class BorrowingDaoJdbc implements BorrowingDao {
 
     @Override
     public Borrowing read(Book book){
-        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("book", book);
+        SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("bookIsbn", book);
         return namedParameterJdbcTemplate.queryForObject(SELECT_BY_BOOK,namedParameters,rowMapper);
     }
 
@@ -80,9 +80,9 @@ public class BorrowingDaoJdbc implements BorrowingDao {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 
         namedParameters.addValue("borrowId", borrowing.getBorrowId());
-        namedParameters.addValue("status", borrowing.getStatus());
-        namedParameters.addValue("creator", borrowing.getCreator());
-        namedParameters.addValue("book", borrowing.getBook());
+        namedParameters.addValue("status", borrowing.getStatus().name());
+        namedParameters.addValue("creatorID", borrowing.getCreatorId());
+        namedParameters.addValue("bookIsbn", borrowing.getBookIsbn());
         namedParameters.addValue("creationDate", borrowing.getCreationDate());
 
         return namedParameters;
