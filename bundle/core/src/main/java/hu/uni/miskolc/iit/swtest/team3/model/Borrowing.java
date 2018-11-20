@@ -6,18 +6,18 @@ public class Borrowing {
 
     private int borrowId;
     private BorrowStatus status;
-    private User creator;
-    private Book book;
+    private int creatorId;
+    private String bookIsbn;
     private GregorianCalendar creationDate;
 
     public Borrowing(){}
 
-    public Borrowing(int borrowId, BorrowStatus status, User creator, Book book, GregorianCalendar creationDate) {
-        this.borrowId = borrowId;
-        this.status = status;
-        this.creator = creator;
-        this.book = book;
-        this.creationDate = creationDate;
+    public Borrowing(int borrowId, BorrowStatus status, int creatorId, String bookIsbn, GregorianCalendar creationDate) {
+        setBorrowId(borrowId);
+        setStatus(status);
+        setCreatorId(creatorId);
+        setBookIsbn(bookIsbn);
+        setCreationDate(creationDate);
     }
 
     public int getBorrowId() {
@@ -36,20 +36,20 @@ public class Borrowing {
         this.status = status;
     }
 
-    public User getCreator() {
-        return creator;
+    public int getCreatorId() {
+        return creatorId;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
     }
 
-    public Book getBook() {
-        return book;
+    public String getBookIsbn() {
+        return bookIsbn;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBookIsbn(String bookIsbn) {
+        this.bookIsbn = bookIsbn;
     }
 
     public GregorianCalendar getCreationDate() {

@@ -11,7 +11,7 @@ public class BookTest {
     private static final String TEST_TITLE = "The test";
     private static final String TEST_DESCRIPTION = "A real good one for testing";
     private static final String TEST_LANGUAGE = "english";
-    private static final Integer TEST_COPIES = 1;
+    private static final int TEST_COPIES = 1;
 
     @Test
     public void constructorTest() {
