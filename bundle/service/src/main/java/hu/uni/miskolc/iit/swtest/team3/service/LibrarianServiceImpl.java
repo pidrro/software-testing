@@ -8,7 +8,9 @@ import hu.uni.miskolc.iit.swtest.team3.model.Borrowing;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.uni.miskolc.iit.swtest.team3.model.exception.UnsuccessfulOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,24 +42,33 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     public void addBook(Book book) {
-        bookDao.create(book);
+        try {
+            bookDao.create(book);
+        } catch (DataAccessException exception) {
+            throw new UnsuccessfulOperationException("Could not add book!", exception);
+        }
     }
 
     @Override
     public void addBookInstance(Book book) {
-        String isbn = book.getIsbn();        
-        Book updatedBook = bookDao.read(isbn);
-        updatedBook.setAvailableCopies(book.getAvailableCopies());
-        bookDao.update(updatedBook);
+        String isbn = book.getIsbn();
+        try {
+            Book bookToUpdate = bookDao.read(isbn);
+            bookToUpdate.setAvailableCopies(bookToUpdate.getAvailableCopies() + 1);
+            bookDao.update(bookToUpdate);
+        } catch (DataAccessException | IllegalArgumentException exception) {
+            throw new UnsuccessfulOperationException("Could not add book instance!", exception);
+        }
     }
 
     @Override
     public List<Borrowing> listRequests() {
         List<Borrowing> borrowings = borrowingDao.read();
         List<Borrowing> requestedBorrowing = new ArrayList<>();
-        for(int i=0;i<borrowings.size();i++){
-            if(borrowings.get(i).getStatus() == REQUESTED){
-                requestedBorrowing.add(borrowings.get(i));
+
+        for(Borrowing borrowing : borrowings){
+            if(borrowing.getStatus() == REQUESTED){
+                requestedBorrowing.add(borrowing);
             }
         }
 
@@ -67,11 +78,15 @@ public class LibrarianServiceImpl implements LibrarianService {
     @Override
     public void manageRequest(Borrowing borrowing) {
         int borrowId = borrowing.getBorrowId();
-        Borrowing fromDaoBorrowing = borrowingDao.read(borrowId);
-        if(borrowing.getStatus() != fromDaoBorrowing.getStatus()){
-            fromDaoBorrowing.setStatus(borrowing.getStatus());
+
+        try {
+            Borrowing fromDaoBorrowing = borrowingDao.read(borrowId);
+            if (borrowing.getStatus() != fromDaoBorrowing.getStatus()) {
+                fromDaoBorrowing.setStatus(borrowing.getStatus());
+            }
+            borrowingDao.update(fromDaoBorrowing);
+        } catch (DataAccessException exception) {
+            throw new UnsuccessfulOperationException("Could not change the status of the request!", exception);
         }
-        borrowingDao.update(fromDaoBorrowing);
     }
-        
 }
