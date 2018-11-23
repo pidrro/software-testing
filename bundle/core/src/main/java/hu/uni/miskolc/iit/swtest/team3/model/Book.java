@@ -1,23 +1,27 @@
 package hu.uni.miskolc.iit.swtest.team3.model;
 
+import org.apache.commons.validator.routines.ISBNValidator;
+
 public class Book {
+
+    private static final ISBNValidator ISBN_VALIDATOR = ISBNValidator.getInstance();
 
     private String isbn;
     private String author;
     private String title;
     private String description;
     private String language;
-    private Integer availableCopies;
+    private int availableCopies;
 
     public Book(){}
 
-    public Book(String isbn, String author, String title, String description, String language, Integer availableCopies) {
-        this.isbn = isbn;
-        this.author = author;
-        this.title = title;
-        this.description = description;
-        this.language = language;
-        this.availableCopies = availableCopies;
+    public Book(String isbn, String author, String title, String description, String language, int availableCopies) {
+        setIsbn(isbn);
+        setAuthor(author);
+        setTitle(title);
+        setDescription(description);
+        setLanguage(language);
+        setAvailableCopies(availableCopies);
     }
 
     public String getIsbn() {
@@ -25,7 +29,11 @@ public class Book {
     }
 
     public void setIsbn(String isbn) {
-        this.isbn = isbn;
+        if(ISBN_VALIDATOR.isValid(isbn)) {
+            this.isbn = isbn;
+        } else {
+            throw new IllegalArgumentException("The given ISBN is invalid, check its format!");
+        }
     }
 
     public String getAuthor() {
@@ -60,11 +68,15 @@ public class Book {
         this.language = language;
     }
 
-    public Integer getAvailableCopies() {
+    public int getAvailableCopies() {
         return availableCopies;
     }
 
-    public void setAvailableCopies(Integer availableCopies) {
-        this.availableCopies = availableCopies;
+    public void setAvailableCopies(int availableCopies) {
+        if(availableCopies >= 0) {
+            this.availableCopies = availableCopies;
+        } else {
+            throw new IllegalArgumentException("The number of available copies should be a positive number!");
+        }
     }
 }

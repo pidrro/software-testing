@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.uni.miskolc.iit.swtest.team3.dao;
 
 import hu.uni.miskolc.iit.swtest.team3.model.Borrowing;
 import hu.uni.miskolc.iit.swtest.team3.model.Book;
+import hu.uni.miskolc.iit.swtest.team3.model.User;
+
 import java.util.List;
 
 /**
@@ -17,13 +14,15 @@ public interface BorrowingDao {
     
     int create(Borrowing borrowing);
     
-    int[] create(List<Borrowing> books);
+    int[] create(List<Borrowing> borrowings);
 
     Borrowing read(int borrowId);
 
+    Borrowing read(Book book);
+
     List<Borrowing> read();
 
-    Borrowing read(Book book);
+    List<Borrowing> readByUser(User creator);
 
     int update(Borrowing borrowing);
 
