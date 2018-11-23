@@ -14,6 +14,13 @@ public class User {
 
     public User(){}
 
+    public User(String passwordHash, String name, String email, Boolean librarian) {
+        setPasswordHash(passwordHash);
+        setName(name);
+        setEmail(email);
+        setLibrarian(librarian);
+    }
+
     public User(int userId, String passwordHash, String name, String email, Boolean librarian) {
         setUserId(userId);
         setPasswordHash(passwordHash);

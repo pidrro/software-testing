@@ -17,8 +17,8 @@ public class SpringDaoConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
         dataSource.setUrl("jdbc:mariadb://localhost:3306/softwaretesting");
-        dataSource.setUsername("softwaretesting");
-        dataSource.setPassword("softwaretesting");
+        dataSource.setUsername("root");
+        dataSource.setPassword("");
         return dataSource;
     }
 

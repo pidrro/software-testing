@@ -3,9 +3,13 @@ package hu.uni.miskolc.iit.swtest.team3.service;
 import hu.uni.miskolc.iit.swtest.team3.dao.BookDao;
 import hu.uni.miskolc.iit.swtest.team3.dao.BorrowingDao;
 import hu.uni.miskolc.iit.swtest.team3.model.*;
+import hu.uni.miskolc.iit.swtest.team3.model.exception.NoAvailableCopiesException;
+import hu.uni.miskolc.iit.swtest.team3.model.exception.UnsuccessfulOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Service
@@ -21,27 +25,51 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public List<Book> listBooks() { return bookDao.read(); }
-
-    @Override
-    public List<Borrowing> listBorrowings() {return borrowingDao.read();}
-
-    @Override
-    public void requestBook(Book book) {
+    public List<Book> listBooks() {
         try {
-            Borrowing fromBorrowingDao = borrowingDao.read(book);
-            if (fromBorrowingDao.getStatus() != BorrowStatus.RETURNED) {
-                fromBorrowingDao.setStatus(BorrowStatus.REQUESTED);
-                borrowingDao.update(fromBorrowingDao);}
-            }
-            catch(DataAccessException exception){return;}
+            return bookDao.read();
+        } catch (DataAccessException exception) {
+            throw new UnsuccessfulOperationException("Could not get the list of books!", exception);
+        }
     }
+
+    @Override
+    public List<Borrowing> listBorrowings(User user) {
+        try {
+            return borrowingDao.readByUser(user);
+        } catch (DataAccessException exception) {
+            throw new UnsuccessfulOperationException("Could not get the list of borrowings!", exception);
+        }
+    }
+
+    @Override
+    public void requestBook(Book book, User reader) {
+        try {
+            Book requestedBook = bookDao.read(book.getIsbn());
+
+            if(requestedBook.getAvailableCopies() < 1) {
+                throw new NoAvailableCopiesException("There is no available copies from the requested book currently!");
+            }
+            else {
+                Borrowing borrowingToCreate = new Borrowing(BorrowStatus.REQUESTED,reader.getUserId(), book.getIsbn(), new GregorianCalendar());
+                borrowingDao.create(borrowingToCreate);
+            }
+        } catch(DataAccessException exception) {
+            throw new UnsuccessfulOperationException("Book request cannot be created!");
+        }
+    }
+
     @Override
     public Boolean checkAvailability(Book book){
-        try{Borrowing fromBorrowingDao =borrowingDao.read(book);
-            if(fromBorrowingDao.getStatus() == BorrowStatus.RETURNED){return Boolean.TRUE;}
-            else return Boolean.FALSE;}
-        catch (DataAccessException exception){return Boolean.FALSE;}
+        try{
+            Book bookToCheck = bookDao.read(book.getIsbn());
+            if(bookToCheck.getAvailableCopies() > 0){
+                return Boolean.TRUE;
+            }
+            else return Boolean.FALSE;
+        }
+        catch (DataAccessException exception){
+            throw new UnsuccessfulOperationException("Could not check the availability of the book!");
+        }
     }
-
 }

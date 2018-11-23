@@ -3,7 +3,8 @@ package hu.uni.miskolc.iit.swtest.team3.service;
 import hu.uni.miskolc.iit.swtest.team3.dao.BookDao;
 import hu.uni.miskolc.iit.swtest.team3.dao.BorrowingDao;
 import hu.uni.miskolc.iit.swtest.team3.model.Book;
-import static hu.uni.miskolc.iit.swtest.team3.model.BorrowStatus.REQUESTED;
+
+import hu.uni.miskolc.iit.swtest.team3.model.BorrowStatus;
 import hu.uni.miskolc.iit.swtest.team3.model.Borrowing;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +33,20 @@ public class LibrarianServiceImpl implements LibrarianService {
     
     @Override
     public List<Book> listBooks() {
-        return bookDao.read();
+        try {
+            return bookDao.read();
+        } catch (DataAccessException exception) {
+            throw new UnsuccessfulOperationException("Could not get the list of books!", exception);
+        }
     }
 
     @Override
     public List<Borrowing> listBorrowings() {
-        return borrowingDao.read();
+        try {
+            return borrowingDao.read();
+        } catch (DataAccessException exception) {
+            throw new UnsuccessfulOperationException("Could not get the list of borrowings!", exception);
+        }
     }
 
     @Override
@@ -63,30 +72,79 @@ public class LibrarianServiceImpl implements LibrarianService {
 
     @Override
     public List<Borrowing> listRequests() {
-        List<Borrowing> borrowings = borrowingDao.read();
-        List<Borrowing> requestedBorrowing = new ArrayList<>();
+        List<Borrowing> borrowings;
+        List<Borrowing> requestedBorrowings = new ArrayList<>();
+
+        try {
+            borrowings = borrowingDao.read();
+        } catch (DataAccessException exception) {
+            throw new UnsuccessfulOperationException("Could not get the list of borrowings!", exception);
+        }
 
         for(Borrowing borrowing : borrowings){
-            if(borrowing.getStatus() == REQUESTED){
-                requestedBorrowing.add(borrowing);
+            if(borrowing.getStatus() == BorrowStatus.REQUESTED){
+                requestedBorrowings.add(borrowing);
             }
         }
 
-        return requestedBorrowing;
+        return requestedBorrowings;
     }
         
     @Override
     public void manageRequest(Borrowing borrowing) {
         int borrowId = borrowing.getBorrowId();
+        BorrowStatus newStatus = borrowing.getStatus();
 
         try {
-            Borrowing fromDaoBorrowing = borrowingDao.read(borrowId);
-            if (borrowing.getStatus() != fromDaoBorrowing.getStatus()) {
-                fromDaoBorrowing.setStatus(borrowing.getStatus());
+            Borrowing borrowingToUpdate = borrowingDao.read(borrowId);
+            BorrowStatus oldStatus = borrowingToUpdate.getStatus();
+
+            if (!isValidStatusChange(oldStatus, newStatus)) {
+                throw new IllegalStateException("The requested status is invalid or already persists");
             }
-            borrowingDao.update(fromDaoBorrowing);
+            else {
+                borrowingToUpdate.setStatus(newStatus);
+
+                Book managedBook = bookDao.read(borrowingToUpdate.getBookIsbn());
+                updateAvailableCopies(oldStatus, newStatus, managedBook);
+
+                borrowingDao.update(borrowingToUpdate);
+                bookDao.update(managedBook);
+            }
         } catch (DataAccessException exception) {
             throw new UnsuccessfulOperationException("Could not change the status of the request!", exception);
+        }
+    }
+
+    private boolean isValidStatusChange(BorrowStatus oldStatus, BorrowStatus newStatus) {
+        switch(oldStatus) {
+            case REQUESTED: {
+                if(newStatus == BorrowStatus.BORROWED) return true;
+                else return false;
+            }
+            case BORROWED: {
+                if(newStatus == BorrowStatus.RETURNED) return true;
+                else return false;
+            }
+            case RETURNED: {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private void updateAvailableCopies(BorrowStatus oldStatus, BorrowStatus newStatus, Book bookToManage) {
+        int availableCopiesBefore = bookToManage.getAvailableCopies();
+
+        switch(newStatus) {
+            case BORROWED: {
+                bookToManage.setAvailableCopies(availableCopiesBefore--);
+                break;
+            }
+            case RETURNED: {
+                bookToManage.setAvailableCopies(availableCopiesBefore++);
+                break;
+            }
         }
     }
 }

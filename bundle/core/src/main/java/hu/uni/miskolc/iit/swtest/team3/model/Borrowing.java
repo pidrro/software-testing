@@ -12,6 +12,13 @@ public class Borrowing {
 
     public Borrowing(){}
 
+    public Borrowing(BorrowStatus status, int creatorId, String bookIsbn, GregorianCalendar creationDate) {
+        setStatus(status);
+        setCreatorId(creatorId);
+        setBookIsbn(bookIsbn);
+        setCreationDate(creationDate);
+    }
+
     public Borrowing(int borrowId, BorrowStatus status, int creatorId, String bookIsbn, GregorianCalendar creationDate) {
         setBorrowId(borrowId);
         setStatus(status);

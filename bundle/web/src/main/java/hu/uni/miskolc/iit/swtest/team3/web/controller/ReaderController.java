@@ -2,10 +2,12 @@ package hu.uni.miskolc.iit.swtest.team3.web.controller;
 
 import hu.uni.miskolc.iit.swtest.team3.model.Book;
 import hu.uni.miskolc.iit.swtest.team3.model.Borrowing;
+import hu.uni.miskolc.iit.swtest.team3.model.User;
 import hu.uni.miskolc.iit.swtest.team3.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,9 +31,12 @@ public class ReaderController {
         return readerService.listBooks();
     }
 
-    @GetMapping("borrowings")
+    @GetMapping("{userId}/borrowings")
     @ResponseBody
-    public List<Borrowing> listBorrowing() {
-        return readerService.listBorrowings();
+    public List<Borrowing> listBorrowing(@PathVariable("userId") int userId) {
+        User reader = new User();
+        reader.setUserId(userId);
+
+        return readerService.listBorrowings(reader);
     }
 }

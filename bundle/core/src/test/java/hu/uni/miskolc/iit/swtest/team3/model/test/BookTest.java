@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class BookTest {
 
-    private static final String TEST_ISBN = "817525766-0";
+    private static final String TEST_ISBN = "0-684-84328-5";
     private static final String TEST_AUTHOR = "Author Arthur";
     private static final String TEST_TITLE = "The test";
     private static final String TEST_DESCRIPTION = "A real good one for testing";
