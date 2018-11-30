@@ -39,4 +39,29 @@ public class UserTest {
         Assert.assertEquals(TEST_EMAIL, userToTest.getEmail());
         Assert.assertEquals(TEST_LIBRARIAN, userToTest.isLibrarian());
     }
+
+    @Test
+    public void constructorTestNoId() {
+        User userToTest = new User(TEST_PASSWORDHASH, TEST_NAME, TEST_EMAIL, TEST_LIBRARIAN);
+
+        Assert.assertEquals(TEST_PASSWORDHASH, userToTest.getPasswordHash());
+        Assert.assertEquals(TEST_NAME, userToTest.getName());
+        Assert.assertEquals(TEST_EMAIL, userToTest.getEmail());
+        Assert.assertEquals(TEST_LIBRARIAN, userToTest.isLibrarian());
+    }
+
+    @Test
+    public void setterTestNoId() {
+        User userToTest = new User();
+
+        userToTest.setPasswordHash(TEST_PASSWORDHASH);
+        userToTest.setName(TEST_NAME);
+        userToTest.setEmail(TEST_EMAIL);
+        userToTest.setLibrarian(TEST_LIBRARIAN);
+
+        Assert.assertEquals(TEST_PASSWORDHASH, userToTest.getPasswordHash());
+        Assert.assertEquals(TEST_NAME, userToTest.getName());
+        Assert.assertEquals(TEST_EMAIL, userToTest.getEmail());
+        Assert.assertEquals(TEST_LIBRARIAN, userToTest.isLibrarian());
+    }
 }

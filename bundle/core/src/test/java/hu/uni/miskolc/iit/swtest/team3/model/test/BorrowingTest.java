@@ -41,4 +41,28 @@ public class BorrowingTest {
         Assert.assertEquals(TEST_BOOKISBN, borrowingToTest.getBookIsbn());
         Assert.assertEquals(TEST_CREATIONDATE, borrowingToTest.getCreationDate());
     }
+
+    @Test
+    public void constructorTestNoId() {
+        Borrowing borrowingToTest = new Borrowing(TEST_BORROWSTATUS, TEST_CREATORID, TEST_BOOKISBN, TEST_CREATIONDATE);
+
+        Assert.assertEquals(TEST_BORROWSTATUS, borrowingToTest.getStatus());
+        Assert.assertEquals(TEST_CREATORID, borrowingToTest.getCreatorId());
+        Assert.assertEquals(TEST_BOOKISBN, borrowingToTest.getBookIsbn());
+        Assert.assertEquals(TEST_CREATIONDATE, borrowingToTest.getCreationDate());
+    }
+
+    @Test
+    public void setterTestNoId() {
+        Borrowing borrowingToTest = new Borrowing();
+        borrowingToTest.setStatus(TEST_BORROWSTATUS);
+        borrowingToTest.setCreatorId(TEST_CREATORID);
+        borrowingToTest.setBookIsbn(TEST_BOOKISBN);
+        borrowingToTest.setCreationDate(TEST_CREATIONDATE);
+
+        Assert.assertEquals(TEST_BORROWSTATUS, borrowingToTest.getStatus());
+        Assert.assertEquals(TEST_CREATORID, borrowingToTest.getCreatorId());
+        Assert.assertEquals(TEST_BOOKISBN, borrowingToTest.getBookIsbn());
+        Assert.assertEquals(TEST_CREATIONDATE, borrowingToTest.getCreationDate());
+    }
 }
