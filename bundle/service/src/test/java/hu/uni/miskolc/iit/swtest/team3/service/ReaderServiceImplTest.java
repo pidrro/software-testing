@@ -24,6 +24,7 @@ import static org.mockito.Mockito.when;
 /**
  *
  * @author tdavi
+ *execptions tested by Áron Nagy
  */
 public class ReaderServiceImplTest {
 
@@ -72,6 +73,14 @@ public class ReaderServiceImplTest {
 
     @Test
     public void testListBooks() {
+        when(testBookDao.read()).thenReturn(testBookList);
+
+        Assert.assertEquals(testBookList, readerServiceImpl.listBooks());
+        verify(testBookDao).read();
+    }
+
+    @Test(expected = UnsuccessfulOperationExceptio.class)
+    public void testListBookException() {
         when(testBookDao.read()).thenReturn(testBookList);
 
         Assert.assertEquals(testBookList, readerServiceImpl.listBooks());
