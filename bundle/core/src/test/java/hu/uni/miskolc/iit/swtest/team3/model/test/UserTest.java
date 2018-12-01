@@ -70,5 +70,4 @@ public class UserTest {
         User user = new User();
         user.setEmail(null);
     }
-
 }
