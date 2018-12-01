@@ -64,4 +64,11 @@ public class UserTest {
         Assert.assertEquals(TEST_EMAIL, userToTest.getEmail());
         Assert.assertEquals(TEST_LIBRARIAN, userToTest.isLibrarian());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setEmailTest(){
+        User user = new User();
+        user.setEmail(null);
+    }
+
 }
