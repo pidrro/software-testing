@@ -9,19 +9,19 @@ public class NoAvailableCopiesExceptionTest{
     private static final String MESSAGE = "Test message.";
 
     @Test
-    public NoAvailableCopiesExceptionTest(){
+    public void NoAvailableCopiesExceptionTest(){
         NoAvailableCopiesException exception = new NoAvailableCopiesException();
         Assert.assertNull(exception.getMessage());
     }
 
     @Test
-    public NoAvailableCopiesExceptionTestWithMsg(){
+    public void NoAvailableCopiesExceptionTestWithMsg(){
         NoAvailableCopiesException exception = new NoAvailableCopiesException(MESSAGE);
         Assert.assertEquals(exception.getMessage(),MESSAGE);
     }
 
     @Test
-    public NoAvailableCopiesExceptionTestWithMsgAndCause(){
+    public void NoAvailableCopiesExceptionTestWithMsgAndCause(){
         RuntimeException e = new RuntimeExcpetion(MESSAGE + " Tested!");
         NoAvailableCopiesException exception = new NoAvailableCopiesException(MESSAGE, e);
 
@@ -30,7 +30,7 @@ public class NoAvailableCopiesExceptionTest{
     }
 
     @Test
-    public NoAvailableCopiesExceptionTestWithCause(){
+    public void NoAvailableCopiesExceptionTestWithCause(){
         RuntimeException e = new RuntimeExcpetion(MESSAGE + " Tested!");
         NoAvailableCopiesException exception = new NoAvailableCopiesException(e);
 
