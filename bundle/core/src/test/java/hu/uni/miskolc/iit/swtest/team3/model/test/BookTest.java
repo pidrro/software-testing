@@ -43,4 +43,16 @@ public class BookTest {
         Assert.assertEquals(bookToTest.getLanguage(), TEST_LANGUAGE);
         Assert.assertEquals(bookToTest.getAvailableCopies(), TEST_COPIES);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setAvailableCopiesTest(){
+        Book book = new Book();
+        book.setAvailableCopies(-1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setIsbnTest(){
+        Book book = new Book();
+        book.setIsbn(null);
+    }
 }
