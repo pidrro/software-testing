@@ -3,22 +3,18 @@ package hu.uni.miskolc.iit.swtest.team3.web.controller;
 import hu.uni.miskolc.iit.swtest.team3.model.Book;
 import hu.uni.miskolc.iit.swtest.team3.model.Borrowing;
 import hu.uni.miskolc.iit.swtest.team3.model.User;
+import hu.uni.miskolc.iit.swtest.team3.model.exception.UnsuccessfulOperationException;
 import hu.uni.miskolc.iit.swtest.team3.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/reader/")
 public class ReaderController {
 
-    final
-    ReaderService readerService;
+    private final ReaderService readerService;
 
     @Autowired
     public ReaderController(ReaderService readerService) {
@@ -26,17 +22,34 @@ public class ReaderController {
     }
 
     @GetMapping("books")
-    @ResponseBody
     public List<Book> listBooks() {
         return readerService.listBooks();
     }
 
-    @GetMapping("{userId}/borrowings")
-    @ResponseBody
-    public List<Borrowing> listBorrowing(@PathVariable("userId") int userId) {
-        User reader = new User();
-        reader.setUserId(userId);
-
-        return readerService.listBorrowings(reader);
+    @GetMapping("isAvailable")
+    public Boolean checkAvailability(@RequestBody Book book) {
+        return readerService.checkAvailability(book);
     }
+
+    @GetMapping("{readerId}/borrowings")
+    public List<Borrowing> showBorrowings(@PathVariable("readerId") int readerId) {
+        User currentReader = new User();
+        currentReader.setUserId(readerId);
+        return readerService.listBorrowings(currentReader);
+    }
+
+    @PostMapping("{readerId}/requestBook")
+    public void requestBook(@PathVariable("readerId") int readerId,@RequestBody Book book) {
+        User currentReader = new User();
+        currentReader.setUserId(readerId);
+        readerService.requestBook(book, currentReader);
+    }
+
+    @ExceptionHandler(UnsuccessfulOperationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public void unsuccessfulOperation() {}
+
+    @ExceptionHandler(UnsuccessfulOperationException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public void noAvailableCopies() {}
 }
