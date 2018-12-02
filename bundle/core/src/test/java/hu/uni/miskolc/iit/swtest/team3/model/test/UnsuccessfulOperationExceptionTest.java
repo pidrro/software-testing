@@ -36,6 +36,6 @@ public class UnsuccessfulOperationExceptionTest{
         UnsuccessfulOperationException exception = new UnsuccessfulOperationException(e);
 
         Assert.assertEquals(exception.getCause(),e);
-        Assert.assertNull(exception.getMessage());
+        Assert.assertEquals(exception.getMessage(),e.getMessage());
     }
 }
