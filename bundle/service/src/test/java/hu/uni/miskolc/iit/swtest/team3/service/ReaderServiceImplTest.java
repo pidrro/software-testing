@@ -82,9 +82,12 @@ public class ReaderServiceImplTest {
         verify(testBookDao).read();
     }
 
-    @Test
+    @Test(expected = UnsuccessfulOperationException.class)
     public void listBooksException(){
         when(testBookDao.read()).thenThrow((new UnsuccessfulOperationException("Could not get the list of books!")));
+
+        Assert.assertEquals(testBookList, readerServiceImpl.listBooks());
+        verify(testBookDao).read();
     }
 
     @Test
