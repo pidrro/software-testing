@@ -35,7 +35,7 @@ public class NoAvailableCopiesExceptionTest{
         RuntimeException e = new RuntimeException(MESSAGE + " Tested!");
         NoAvailableCopiesException exception = new NoAvailableCopiesException(e);
 
-        Assert.assertEquals(exception.getMessage(),e.getMessage());
+        Assert.assertNotNull(exception.getMessage());
         Assert.assertEquals(exception.getCause(),e);
     }
 }

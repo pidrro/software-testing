@@ -35,7 +35,7 @@ public class IllegalStatusChangeExceptionTest{
         RuntimeException e = new RuntimeException(MESSAGE + " Tested!");
         IllegalStatusChangeException exception = new IllegalStatusChangeException(e);
 
-        Assert.assertEquals(exception.getMessage(),e.getMessage());
+        Assert.assertNotNull(exception.getMessage());
         Assert.assertEquals(exception.getCause(),e);
     }
 }
