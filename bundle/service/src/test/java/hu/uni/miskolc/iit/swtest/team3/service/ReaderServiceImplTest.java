@@ -83,8 +83,8 @@ public class ReaderServiceImplTest {
     }
 
     @Test(expected = UnsuccessfulOperationException.class)
-    public void listBooksException(){
-        when(testBookDao.read()).thenThrow((new UnsuccessfulOperationException("Could not get the list of books!")));
+    public void testListBooksException() {
+        Mockito.when(testBookDao.read()).thenThrow(Mockito.mock(DataAccessException.class)).thenReturn(testBookList);
 
         Assert.assertEquals(testBookList, readerServiceImpl.listBooks());
         verify(testBookDao).read();
