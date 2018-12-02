@@ -14,12 +14,15 @@ import hu.uni.miskolc.iit.swtest.team3.model.User;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import hu.uni.miskolc.iit.swtest.team3.model.exception.UnsuccessfulOperationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.springframework.dao.DataAccessException;
+
+import static org.mockito.Mockito.*;
 
 /**
  *
@@ -30,8 +33,8 @@ public class ReaderServiceImplTest {
 
     ReaderServiceImpl readerServiceImpl = null;
 
-    BookDao testBookDao = Mockito.mock(BookDao.class);
-    BorrowingDao testBorrowingDao = Mockito.mock(BorrowingDao.class);
+    BookDao testBookDao = Mockito.mock(BookDao.class); //Mocked BookDao
+    BorrowingDao testBorrowingDao = Mockito.mock(BorrowingDao.class); //Mocked BorrowingDao
 
     private List<Book> testBookList = new ArrayList<>();
     private Book testBook = new Book();
@@ -79,12 +82,9 @@ public class ReaderServiceImplTest {
         verify(testBookDao).read();
     }
 
-    @Test(expected = UnsuccessfulOperationExceptio.class)
-    public void testListBookException() {
-        when(testBookDao.read()).thenReturn(testBookList);
-
-        Assert.assertEquals(testBookList, readerServiceImpl.listBooks());
-        verify(testBookDao).read();
+    @Test
+    public void listBooksException(){
+        when(testBookDao.read()).thenThrow((new UnsuccessfulOperationException("Could not get the list of books!")));
     }
 
     @Test
