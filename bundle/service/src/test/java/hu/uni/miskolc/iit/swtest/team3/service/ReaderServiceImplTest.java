@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 /**
  *
  * @author tdavi
- *execptions tested by Áron Nagy
+ *exceptions tested by Áron Nagy
  */
 public class ReaderServiceImplTest {
 
@@ -98,12 +98,28 @@ public class ReaderServiceImplTest {
         verify(testBorrowingDao).readByUser(testUser);
     }
 
+    @Test(expected = UnsuccessfulOperationException.class)
+    public void testListBorrowingsException() {
+        Mockito.when(testBorrowingDao.readByUser(testUser)).thenThrow(Mockito.mock(DataAccessException.class)).thenReturn(testBorrowingList);
+
+        Assert.assertEquals(testBorrowingList, readerServiceImpl.listBorrowings(testUser));
+        verify(testBorrowingDao).readByUser(testUser);
+    }
+
     @Test
     public void testRequestBook() {
         when(testBookDao.read(testBook.getIsbn())).thenReturn(testBook);
         readerServiceImpl.requestBook(testBook, testUser);
     }
+
+    @Test(expected = UnsuccessfulOperationException.class)
+    public void testRequestBookException() {
+        Mockito.when(testBookDao.read(testBook.getIsbn())).thenThrow(Mockito.mock(DataAccessException.class)).thenReturn(testBook);
+
+        readerServiceImpl.requestBook(testBook, testUser);
+    }
     
+
     @Test
     public void testCheckAvailability(){
         when(testBookDao.read(testBook.getIsbn())).thenReturn(testBook);
@@ -115,5 +131,16 @@ public class ReaderServiceImplTest {
             Assert.assertFalse(readerServiceImpl.checkAvailability(testBook));
         }
     }
-    
+
+    @Test(expected = UnsuccessfulOperationException.class)
+    public void testCheckAvailabilityException() {
+        Mockito.when(testBookDao.read(testBook.getIsbn())).thenThrow(Mockito.mock(DataAccessException.class)).thenReturn(testBook);
+
+        if(testBook.getAvailableCopies() > 0){
+            Assert.assertTrue(readerServiceImpl.checkAvailability(testBook));
+        }
+        else {
+            Assert.assertFalse(readerServiceImpl.checkAvailability(testBook));
+        }
+    }
 }
