@@ -17,13 +17,13 @@ public class IllegalStatusChangeExceptionTest{
 
     @Test
     public void IllegalStatusChangeExceptionTestWithMsg(){
-        IllegalStatusChangeException exception = new NIllegalStatusChangeException(MESSAGE);
+        IllegalStatusChangeException exception = new IllegalStatusChangeException(MESSAGE);
         Assert.assertEquals(exception.getMessage(),MESSAGE);
     }
 
     @Test
     public void IllegalStatusChangeExceptionTestWithMsgAndCause(){
-        RuntimeException e = new RuntimeExcpetion(MESSAGE + " Tested!");
+        RuntimeException e = new RuntimeException(MESSAGE + " Tested!");
         IllegalStatusChangeException exception = new IllegalStatusChangeException(MESSAGE, e);
 
         Assert.assertEquals(exception.getMessage(),MESSAGE);
@@ -32,7 +32,7 @@ public class IllegalStatusChangeExceptionTest{
 
     @Test
     public void IllegalStatusChangeExceptionTestWithCause(){
-        RuntimeException e = new RuntimeExcpetion(MESSAGE + " Tested!");
+        RuntimeException e = new RuntimeException(MESSAGE + " Tested!");
         IllegalStatusChangeException exception = new IllegalStatusChangeException(e);
 
         Assert.assertNull(exception.getMessage());

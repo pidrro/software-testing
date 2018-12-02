@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.lang.RuntimeException;
 
-public class NoAvailableCopiesExceptionTest{
+public class UnsuccessfulOperationExceptionTest{
 
     private static final String MESSAGE = "Test message.";
 
@@ -23,7 +23,7 @@ public class NoAvailableCopiesExceptionTest{
 
     @Test
     public void UnsuccessfulOperationExceptionTestWithMsgAndCause(){
-        RuntimeException e = new RuntimeExcpetion(MESSAGE + " Tested!");
+        RuntimeException e = new RuntimeException(MESSAGE + " Tested!");
         UnsuccessfulOperationException exception = new UnsuccessfulOperationException(MESSAGE, e);
 
         Assert.assertEquals(exception.getMessage(),MESSAGE);
@@ -32,7 +32,7 @@ public class NoAvailableCopiesExceptionTest{
 
     @Test
     public void UnsuccessfulOperationExceptionTestWithCause(){
-        RuntimeException e = new RuntimeExcpetion(MESSAGE + " Tested!");
+        RuntimeException e = new RuntimeException(MESSAGE + " Tested!");
         UnsuccessfulOperationException exception = new UnsuccessfulOperationException(e);
 
         Assert.assertEquals(exception.getCause(),e);
