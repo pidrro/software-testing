@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import hu.uni.miskolc.iit.swtest.team3.model.exception.NoAvailableCopiesException;
 import hu.uni.miskolc.iit.swtest.team3.model.exception.UnsuccessfulOperationException;
 import org.junit.Before;
 import org.junit.Test;
@@ -84,7 +85,7 @@ public class ReaderServiceImplTest {
 
     @Test(expected = UnsuccessfulOperationException.class)
     public void testListBooksException() {
-        Mockito.when(testBookDao.read()).thenThrow(Mockito.mock(DataAccessException.class)).thenReturn(testBookList);
+        Mockito.when(testBookDao.read()).thenThrow(Mockito.mock(DataAccessException.class));
 
         Assert.assertEquals(testBookList, readerServiceImpl.listBooks());
         verify(testBookDao).read();
@@ -100,7 +101,7 @@ public class ReaderServiceImplTest {
 
     @Test(expected = UnsuccessfulOperationException.class)
     public void testListBorrowingsException() {
-        Mockito.when(testBorrowingDao.readByUser(testUser)).thenThrow(Mockito.mock(DataAccessException.class)).thenReturn(testBorrowingList);
+        Mockito.when(testBorrowingDao.readByUser(testUser)).thenThrow(Mockito.mock(DataAccessException.class));
 
         Assert.assertEquals(testBorrowingList, readerServiceImpl.listBorrowings(testUser));
         verify(testBorrowingDao).readByUser(testUser);
@@ -114,11 +115,18 @@ public class ReaderServiceImplTest {
 
     @Test(expected = UnsuccessfulOperationException.class)
     public void testRequestBookException() {
-        Mockito.when(testBookDao.read(testBook.getIsbn())).thenThrow(Mockito.mock(DataAccessException.class)).thenReturn(testBook);
+        Mockito.when(testBookDao.read(testBook.getIsbn())).thenThrow(Mockito.mock(DataAccessException.class));
 
         readerServiceImpl.requestBook(testBook, testUser);
     }
-    
+
+    @Test(expected = NoAvailableCopiesException.class)
+    public void TestRequestBookZeroCopies() {
+        //doThrow(NoAvailableCopiesException.class).when((testBook.getAvailableCopies()));
+        testBook.setAvailableCopies(0);
+        when(testBookDao.read(testBook.getIsbn())).thenReturn(testBook);
+        readerServiceImpl.requestBook(testBook, testUser);
+    }
 
     @Test
     public void testCheckAvailability(){
@@ -134,7 +142,7 @@ public class ReaderServiceImplTest {
 
     @Test(expected = UnsuccessfulOperationException.class)
     public void testCheckAvailabilityException() {
-        Mockito.when(testBookDao.read(testBook.getIsbn())).thenThrow(Mockito.mock(DataAccessException.class)).thenReturn(testBook);
+        Mockito.when(testBookDao.read(testBook.getIsbn())).thenThrow(Mockito.mock(DataAccessException.class));
 
         if(testBook.getAvailableCopies() > 0){
             Assert.assertTrue(readerServiceImpl.checkAvailability(testBook));
