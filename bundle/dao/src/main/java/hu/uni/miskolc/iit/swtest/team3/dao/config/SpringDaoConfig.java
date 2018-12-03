@@ -13,12 +13,12 @@ import javax.sql.DataSource;
 public class SpringDaoConfig {
 
     @Bean
-    public DataSource mariaDbDataSource() {
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
         dataSource.setUrl("jdbc:mariadb://localhost:3306/softwaretesting");
-        dataSource.setUsername("root");
-        dataSource.setPassword("");
+        dataSource.setUsername("softwaretesting");
+        dataSource.setPassword("softwaretesting");
         return dataSource;
     }
 
