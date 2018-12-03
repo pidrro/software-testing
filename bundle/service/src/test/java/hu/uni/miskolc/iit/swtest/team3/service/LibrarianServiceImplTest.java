@@ -33,7 +33,6 @@ public class LibrarianServiceImplTest{
         testBook.setDescription("Adventures, Drama");
         testBook.setLanguage("English");
         testBook.setAvailableCopies(5);
-
         testBookList.add(testBook);
 
         testBorrowing.setBorrowId(1);
