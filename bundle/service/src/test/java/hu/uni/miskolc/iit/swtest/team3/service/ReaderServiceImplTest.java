@@ -122,7 +122,6 @@ public class ReaderServiceImplTest {
 
     @Test(expected = NoAvailableCopiesException.class)
     public void TestRequestBookZeroCopies() {
-        //doThrow(NoAvailableCopiesException.class).when((testBook.getAvailableCopies()));
         testBook.setAvailableCopies(0);
         when(testBookDao.read(testBook.getIsbn())).thenReturn(testBook);
         readerServiceImpl.requestBook(testBook, testUser);
@@ -150,5 +149,12 @@ public class ReaderServiceImplTest {
         else {
             Assert.assertFalse(readerServiceImpl.checkAvailability(testBook));
         }
+    }
+
+    @Test
+    public void testNoAvailability() {
+        testBook.setAvailableCopies(0);
+        when(testBookDao.read(testBook.getIsbn())).thenReturn(testBook);
+        Assert.assertEquals(false,readerServiceImpl.checkAvailability(testBook));
     }
 }
