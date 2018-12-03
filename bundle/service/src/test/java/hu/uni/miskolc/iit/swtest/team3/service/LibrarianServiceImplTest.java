@@ -13,18 +13,19 @@ import static org.mockito.Mockito.*;
 
 public class LibrarianServiceImplTest{
     private List<Book> testBookList = new ArrayList<>();
+    private List<Borrowing> testBorrowingList = new ArrayList<>();
     private Book testBook = new Book();
     private User testUser = new User();
     private Borrowing testBorrowing= new Borrowing();
-    ReaderServiceImpl readerServiceImpl = null;
-    LibrarianServiceImplTest librarianServiceImpl = null;
+
+    LibrarianServiceImpl librarianServiceImpl = null;
 
     BookDao testBookDao = Mockito.mock(BookDao.class);
     BorrowingDao testBorrowingDao = Mockito.mock(BorrowingDao.class);
 
     @BeforeClass
     public void init() {
-        readerServiceImpl = new ReaderServiceImpl(testBookDao, testBorrowingDao);
+        librarianServiceImpl = new LibrarianServiceImpl(testBookDao, testBorrowingDao);
 
         testBook.setIsbn("12-114-01010-0");
         testBook.setAuthor("some one");
